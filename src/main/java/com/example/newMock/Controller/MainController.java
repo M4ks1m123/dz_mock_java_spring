@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
+import java.util.Random;
 
 @RestController
 public class MainController {
@@ -35,8 +36,9 @@ public class MainController {
 
             ResponseDTO responseDTO = new ResponseDTO();
 
+
             if (firstDigit == '8') {
-                maxLimit = new BigDecimal(2000.00);
+                maxLimit = new BigDecimal( 2000.00);
                 responseDTO.setCurrency("US");
             }
             else if (firstDigit == '9'){
@@ -47,12 +49,13 @@ public class MainController {
                 responseDTO.setCurrency("RUB");
             }
 
-
+            Random random = new Random();
+            BigDecimal newBalance = new BigDecimal(random.nextInt(maxLimit.intValueExact()));
 
             responseDTO.setRqUID(rqUID);
             responseDTO.setClientId(clientId);
             responseDTO.setAccount(requestDTO.getAccount());
-            responseDTO.setBalance(new BigDecimal(777));
+            responseDTO.setBalance(newBalance);
             responseDTO.setMaxLimit(maxLimit);
 
             log.error("********** RequestDTO **********" + mapper.writerWithDefaultPrettyPrinter().writeValueAsString(requestDTO));
